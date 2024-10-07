@@ -21,7 +21,7 @@ let books = [];
 let bookinstances = [];
 
 function authorCreate(first_name, family_name, d_birth, d_death, cb) {
-  authordetail = { first_name: first_name, family_name: family_name }
+  let authordetail = { first_name: first_name, family_name: family_name }
   if (d_birth != false) authordetail.date_of_birth = d_birth
   if (d_death != false) authordetail.date_of_death = d_death
 
@@ -53,7 +53,7 @@ function genreCreate(name, cb) {
 }
 
 function bookCreate(title, summary, isbn, author, genre, cb) {
-  bookdetail = {
+  let bookdetail = {
     title: title,
     summary: summary,
     author: author,
@@ -74,7 +74,7 @@ function bookCreate(title, summary, isbn, author, genre, cb) {
 }
 
 function bookInstanceCreate(book, imprint, due_back, status, cb) {
-  bookinstancedetail = {
+  let bookinstancedetail = {
     book: book,
     imprint: imprint
   }
@@ -205,7 +205,6 @@ async.series([
     }
     else {
       console.log('BOOKInstances: ' + bookinstances);
-
     }
     // All done, disconnect from database
     mongoose.connection.close();
