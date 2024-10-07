@@ -1,31 +1,31 @@
 #! /usr/bin/env node
 
 // Get arguments passed on command line
-var userArgs = process.argv.slice(2);
-var async = require('async')
-var Book = require('./models/book')
-var Author = require('./models/author')
-var Genre = require('./models/genre')
-var BookInstance = require('./models/bookinstance')
+const userArgs = process.argv.slice(2);
+const async = require('async')
+const Book = require('./models/book')
+const Author = require('./models/author')
+const Genre = require('./models/genre')
+const BookInstance = require('./models/bookinstance')
 
-var mongoose = require('mongoose');
-var mongoDB = userArgs[0];
+const mongoose = require('mongoose');
+const mongoDB = userArgs[0];
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
-var db = mongoose.connection;
+let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var authors = []
-var genres = []
-var books = []
-var bookinstances = []
+let authors = [];
+let genres = [];
+let books = [];
+let bookinstances = [];
 
 function authorCreate(first_name, family_name, d_birth, d_death, cb) {
   authordetail = { first_name: first_name, family_name: family_name }
   if (d_birth != false) authordetail.date_of_birth = d_birth
   if (d_death != false) authordetail.date_of_death = d_death
 
-  var author = new Author(authordetail);
+  let author = new Author(authordetail);
 
   author.save(function (err) {
     if (err) {
@@ -39,7 +39,7 @@ function authorCreate(first_name, family_name, d_birth, d_death, cb) {
 }
 
 function genreCreate(name, cb) {
-  var genre = new Genre({ name: name });
+  let genre = new Genre({ name: name });
 
   genre.save(function (err) {
     if (err) {
@@ -61,7 +61,7 @@ function bookCreate(title, summary, isbn, author, genre, cb) {
   }
   if (genre != false) bookdetail.genre = genre
 
-  var book = new Book(bookdetail);
+  let book = new Book(bookdetail);
   book.save(function (err) {
     if (err) {
       cb(err, null)
@@ -81,7 +81,7 @@ function bookInstanceCreate(book, imprint, due_back, status, cb) {
   if (due_back != false) bookinstancedetail.due_back = due_back
   if (status != false) bookinstancedetail.status = status
 
-  var bookinstance = new BookInstance(bookinstancedetail);
+  let bookinstance = new BookInstance(bookinstancedetail);
   bookinstance.save(function (err) {
     if (err) {
       console.log('ERROR CREATING BookInstance: ' + bookinstance);
